@@ -7,11 +7,11 @@ tags: [hot, summer]
 
 ### 要點說明
 
-- docker-compose.yml 中的 env_file，跟 environment 的功能一樣，並不是可以指定不同的 .env file name，換言之，讀取變數還是只能用 .env
+#### 1. docker-compose.yml 中的 env_file，跟 environment 的功能一樣，並不是可以指定不同的 .env file name，換言之，讀取變數還是只能用 .env
 
-- docker-compose.yml 中 `service name` -> `build` -> `args` 設定，即是 pass 給 Dockerfile 中的 ARG
+#### 2. docker-compose.yml 中 `service name` -> `build` -> `args` 設定，即是 pass 給 Dockerfile 中的 ARG
 
-- Dockerfile 中 `ARG` 遇到 `FROM` 要小心，例如 `FROM` 前就算有宣告過 `ARG VAR1`, FROM 後要再使用，還是需要宣告一次
+#### 3. Dockerfile 中 `ARG` 遇到 `FROM` 要小心，例如 `FROM` 前就算有宣告過 `ARG VAR1`, FROM 後要再使用，還是需要宣告一次
 
 不正確
 
@@ -32,9 +32,9 @@ ARG GITHUB_ACCESS_TOKEN
 RUN composer config -g github-oauth.github.com ${GITHUB_ACCESS_TOKEN} 
 ```
 
-- Dockerfile RUN、COPY、ADD 是在 build image 階段執行，CMD、ENTRYPOINT 是在 run container 的階段時候執行
+#### 4. Dockerfile RUN、COPY、ADD 是在 build image 階段執行，CMD、ENTRYPOINT 是在 run container 的階段時候執行
 
-- Dockerfile RUN 中如果想要使用外部變數，例如 ARG，可用變通方法，再宣告一次 ENV foo ${foo}，${foo} 從 ARG 而來
+#### 5. Dockerfile RUN 中如果想要使用外部變數，例如 ARG，可用變通方法，再宣告一次 ENV foo ${foo}，${foo} 從 ARG 而來
 
 例如
 
@@ -53,7 +53,7 @@ ocker build -t {your_name} --build-arg FOO=test .
 ```
 
 
-- Dockerfile CMD 中若要使用變數，僅能使用環境變數
+#### 6. Dockerfile CMD 中若要使用變數，僅能使用環境變數
 
 例如
 
